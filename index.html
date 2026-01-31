@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>Card Guesser</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div id="app">
+        <!-- Full screen camera -->
+        <video id="video" autoplay playsinline muted></video>
+        <canvas id="overlay"></canvas>
+
+        <!-- HUD Elements -->
+        <div id="hud">
+            <!-- Top bar -->
+            <div id="hud-top">
+                <div id="attempts-display">
+                    <span class="hud-label">ATTEMPTS</span>
+                    <div id="attempts-dots">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                </div>
+                <div id="status-display">
+                    <span id="status">LOADING...</span>
+                </div>
+                <button id="switch-camera" aria-label="Switch Camera">
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                        <path
+                            d="M20 4h-3.17L15 2H9L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-5 11.5V13H9v2.5L5.5 12 9 8.5V11h6V8.5l3.5 3.5-3.5 3.5z" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Center targeting reticle -->
+            <div id="reticle">
+                <div class="reticle-corner tl"></div>
+                <div class="reticle-corner tr"></div>
+                <div class="reticle-corner bl"></div>
+                <div class="reticle-corner br"></div>
+            </div>
+
+            <!-- Detected card display (floating center-bottom) -->
+            <div id="detected-display" class="hidden">
+                <span id="detected-label">--</span>
+            </div>
+
+            <!-- Submit button -->
+            <button id="submit-guess" disabled>
+                <span>🎯 SUBMIT GUESS</span>
+            </button>
+
+            <!-- Feedback panel (right side) -->
+            <div id="feedback-panel">
+                <div class="feedback-row" id="feedback-1"></div>
+                <div class="feedback-row" id="feedback-2"></div>
+                <div class="feedback-row" id="feedback-3"></div>
+            </div>
+        </div>
+
+        <!-- Game result overlay -->
+        <div id="game-result" class="hidden">
+            <div id="result-content">
+                <div id="result-icon"></div>
+                <div id="result-text"></div>
+                <div id="result-card"></div>
+                <button id="play-again">PLAY AGAIN</button>
+            </div>
+        </div>
+
+        <!-- Loading overlay -->
+        <div id="loading-overlay">
+            <div class="loader"></div>
+            <p>Initializing camera...</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.roboflow.com/0.2.26/roboflow.js"></script>
+    <script src="app.js?v=4"></script>
+</body>
+
+</html>

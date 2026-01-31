@@ -249,8 +249,16 @@ class CardGuesser {
     calculateFeedback(guess, target) {
         const guessIdx = this.ranks.indexOf(guess.rank);
         const targetIdx = this.ranks.indexOf(target.rank);
+        const diff = targetIdx - guessIdx;
 
-        let rankMatch = guessIdx === targetIdx ? 'HIT' : (guessIdx < targetIdx ? 'HIGHER' : 'LOWER');
+        let rankMatch;
+        if (diff === 0) {
+            rankMatch = 'HIT';
+        } else if (Math.abs(diff) >= 6) {
+            rankMatch = diff > 0 ? 'MUCH HIGHER' : 'MUCH LOWER';
+        } else {
+            rankMatch = diff > 0 ? 'HIGHER' : 'LOWER';
+        }
 
         const redSuits = ['hearts', 'diamonds'];
         const colorMatch = redSuits.includes(guess.suit) === redSuits.includes(target.suit);
@@ -263,10 +271,28 @@ class CardGuesser {
         const row = document.getElementById(`feedback-${num}`);
         if (!row) return;
 
+        let rankIcon, rankText;
+        if (feedback.rankMatch === 'HIT') {
+            rankIcon = '✓';
+            rankText = 'HIT';
+        } else if (feedback.rankMatch === 'MUCH HIGHER') {
+            rankIcon = '>>';
+            rankText = 'MUCH HIGHER';
+        } else if (feedback.rankMatch === 'HIGHER') {
+            rankIcon = '>';
+            rankText = 'HIGHER';
+        } else if (feedback.rankMatch === 'MUCH LOWER') {
+            rankIcon = '<<';
+            rankText = 'MUCH LOWER';
+        } else {
+            rankIcon = '<';
+            rankText = 'LOWER';
+        }
+
         row.innerHTML = `
             <div class="feedback-item ${feedback.rankMatch === 'HIT' ? 'correct' : 'wrong'}">
-                <span class="icon">${feedback.rankMatch === 'HIT' ? '✓' : (feedback.rankMatch === 'HIGHER' ? '↑' : '↓')}</span>
-                <span>${feedback.rankMatch}</span>
+                <span class="icon" style="font-weight:900; letter-spacing:-2px;">${rankIcon}</span>
+                <span>${rankText}</span>
             </div>
             <div class="feedback-item ${feedback.colorMatch ? 'correct' : 'wrong'}">
                 <span class="icon">${feedback.colorMatch ? '✓' : '✗'}</span>

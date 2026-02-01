@@ -254,7 +254,7 @@ class CardGuesser {
         let rankMatch;
         if (diff === 0) {
             rankMatch = 'HIT';
-        } else if (Math.abs(diff) >= 6) {
+        } else if (Math.abs(diff) >= 5) {
             rankMatch = diff > 0 ? 'MUCH HIGHER' : 'MUCH LOWER';
         } else {
             rankMatch = diff > 0 ? 'HIGHER' : 'LOWER';
